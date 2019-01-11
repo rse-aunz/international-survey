@@ -191,9 +191,9 @@ class surveyCreation:
                 if element["name"] == "surveyls_{}text".format(type_message):
                     message_done = True
                     element["text"] = message
-                if element["name"] == "surveyls_{}".format(type_message):
-                    message_done = True
-                    element["text"] = message
+                # if element["name"] == "surveyls_{}".format(type_message):
+                #     message_done = True
+                #     element["text"] = message
             return_list.append(element)
         return return_list
 
@@ -255,8 +255,8 @@ class surveyCreation:
                 survey_settings, end_message, "end"
             )
             # adding the policy data
-            consent_message = get_text('consent', lang)
-            survey_settings = self._add_text_message(survey_settings, consent_message, 'policy_notice')
+            # consent_message = get_text('consent', lang)
+            # survey_settings = self._add_text_message(survey_settings, consent_message, 'policy_notice')
             # Add the appropriate language field for each of the dictionary
             setting_with_lang = list()
             for d in survey_settings:
@@ -379,6 +379,9 @@ class surveyCreation:
         else:
             question["name"] = row["code"]
             question["text"] = row[txt_lang]
+            # In case no translation is provided, need to get the english text by default
+            if question["text"] == "":
+                question["text"] = row["question"]
 
         question["relevance"] = row["condition"]
         # question["relevance"] = ""
@@ -411,6 +414,9 @@ class surveyCreation:
                 subquestion["language"] = lang
                 subquestion["name"] = row["code"]
                 subquestion["text"] = row[txt_lang]
+                # In case no translation is provided, need to get the english text by default
+                if subquestion["text"] == "":
+                    subquestion["text"] = row['question']
                 self._write_row(subquestion)
 
         if type_question == "ranking":

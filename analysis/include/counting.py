@@ -331,6 +331,8 @@ def count_likert(df, colnames, likert_answer, dropna=False, normalize=False, rei
     df_sub = df_sub.applymap(str)
     # # then replace the -1 into np.nan
     df_sub = df_sub.replace({'-1': np.nan})
+    # df_sub = df_sub.astype(str)
+    # df_sub = df_sub.replace('.0', '', regex=True)
 
     # Calculate the counts for them
     df_count = df_sub.apply(pd.Series.value_counts, dropna=dropna, normalize=normalize)
@@ -344,7 +346,7 @@ def count_likert(df, colnames, likert_answer, dropna=False, normalize=False, rei
     # There is one exception with the questions about general satisfaction.
     # The structure of the questions is as follow:
     # likert3[satisgen1]. [In general, how satisfied are you with [Your current position]]',
-    #'likert3[satisgen2]. [In general, how satisfied are you with [Your career]]'
+    # 'likert3[satisgen2]. [In general, how satisfied are you with [Your career]]'
     # therefore if the goes through the cleaninng process it loose the question header
     return df_count
 

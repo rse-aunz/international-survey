@@ -102,7 +102,7 @@ class conditionFormat:
         for q in self.questions:
             n = 1
             type_question = self.questions[q]['answer_format'].lower().rstrip()
-            if (type_question == "one choice" or type_question == 'multi choice'):
+            if (type_question == "one choice" or type_question == 'multiple choices'):
                 # add the answer and its position to the self.order_answer_one_choice dict for
                 # the self.setup_condition()
                 for text_answer in self.get_answer(self.year, self.questions[q]["answer_file"]):
@@ -178,7 +178,7 @@ class conditionFormat:
             list_str_countries.append(country_condition)
 
         if len(extracted_condition) == 1:
-            list_str_countries = ["({} AND {})".format(extracted_condition[0], i) for i in list_str_countries]
+            list_str_countries = ["(({} AND {}))".format(extracted_condition[0], i) for i in list_str_countries]
 
         if operator == '!=':
             return '{}'.format(" AND ".join(list_str_countries))
@@ -218,7 +218,6 @@ class conditionFormat:
                 # in that list.
                 list_countries_to_exclude = [i for i in self.dict_countries.keys() if i not in list_countries_to_add]
                 final_condition = self.create_country_condition(current_question, list_countries_to_exclude, operator='!=', existing_condition=condition)
-            print(final_condition)
             return final_condition
 
         condition = question['condition']
@@ -256,20 +255,22 @@ class conditionFormat:
             try:
                 answer = condition.split('"')[-2].lower()
             except IndexError:
-                raise TypeError('Error in finding the answer in: {}'.format(condition))
+                print(condition)
+                raise
             yield code, operator, answer
 
     def get_position_answer(self, current_question, answer, code):
         """
-        For limesurve, the answer need to be the index position of the text in the inserted
+        For limesurvey, the answer need to be the index position of the text in the inserted
         answers choice or Y-N in case of Y/N.
         This function take the answer and retrieve the proper index in the self.order_answer_one_choice
         """
+
         position_answer = None
         # set up a variable to confirm the
         # if answer is Y or N, it is simply need to be formated as 'Y' or 'N'
         if answer in ["y", "n", "yes", "no"]:
-            position_answer = "'{}'".format(answer[0].upper())  # Only need the Y or N
+            position_answer = '"{}"'.format(answer[0].upper())  # Only need the Y or N
 
         # If not it means it is from a one choice question and the position of the answer
         # needs to be retrieved
@@ -278,6 +279,7 @@ class conditionFormat:
             # of that answer
             try:
                 for n in self.order_answer_one_choice[code]:
+
                     if self.order_answer_one_choice[code][n].lower().rstrip() == answer.lower().rstrip():
                         position_answer = "{}".format(n)
                         break
@@ -307,10 +309,20 @@ class conditionFormat:
         """
         # In case of exclusion for some countries, need to look like that
         # (is_empty(socio1.NAOK) || (socio1.NAOK != 236)) or (is_empty(socio1.NAOK) || (socio1.NAOK != 237)) or (is_empty(socio1.NAOK) || (socio1.NAOK != 44))))
+        format_condition = None
         if operator == '!=':
-            format_condition = """(!is_empty({0}.NAOK) and ({0}.NAOK {1} {2}))""".format(code, operator, answer)
+            if self.questions[code]['answer_format'].lower() == 'multiple choices':
+                format_condition = """(is_empty({0}_SQ00{1}.NAOK))""".format(code, answer)
+                print(format_condition)
+            else:
+                format_condition = """(!is_empty({0}.NAOK) and ({0}.NAOK {1} {2}))""".format(code, operator, answer)
         else:
-            format_condition = """({}.NAOK {} {})""".format(code, operator, answer)
+            if self.questions[code]['answer_format'].lower() == 'multiple choices':
+                format_condition = """({}_SQ00{}.NAOK == 'Y')""".format(code, answer)
+            else:
+                format_condition = """({}.NAOK {} {})""".format(code, operator, answer)
+        if format_condition is None:
+            raise
         return format_condition
 
     def final_formating(self, list_formated_conditions, dict_of_bool):
