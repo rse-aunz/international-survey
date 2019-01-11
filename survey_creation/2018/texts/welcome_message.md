@@ -81,49 +81,6 @@ For the purposes of data protection law, the University of Southampton is the â€
 
 We aim to store the entire dataset for a period of 10 years. After that period, the data will be only kept in its anonymised version.
 
-What will happen to me if I take part?
---------------------------------------
-
-You will continue to the next page and answer several questions based on the country you are working from.
-
-
-Are there any benefits in my taking part?
------------------------------------------
-
-We try to help Research Software Developer/Engineer to be recognised at an institutional level. There is no direct individual benefit to answer this survey.
-
-Are there any risks involved?
------------------------------
-
-No
-
-Do I have to take part?
------------------------
-
-No, it is entirely up to you to decide whether or not to take part. If you decide you do not want to take part, just close this page.
-
-What happens if I change my mind?
----------------------------------
-
-You have the right to change your mind and withdraw at any time without giving a reason and without your participant rights being affected. If you decide to withdraw, just close the survey at any time.
-If you withdraw from the study, we will keep the information about you that we have already obtained for the purposes of achieving the objectives of the study only.
-
-What will happen to the results of the research?
-------------------------------------------------
-
-We do not collect personal information such as email address or name. Research findings made available in any reports or publications will not include personal information that can directly identify you.
-
-
-Will my participation be confidential?
---------------------------------------
-
-Your participation and the information we collect about you during the course of the research will be kept strictly confidential.
-
-Only members of the research team and responsible members of the University of Southampton may be given access to data about you for monitoring purposes and/or to carry out an audit of the study to ensure that the research is complying with applicable regulations. Individuals from regulatory authorities (people who check that we are carrying out the study correctly) may require access to your data. All of these people have a duty to keep your information, as a research participant, strictly confidential.
-
-However we share the data as open source. These data does not contain personal information.
-
-
 Who is responsible for this survey?
 -----------------------------------
 
@@ -144,4 +101,3 @@ By clicking on the "next" button I confirm:
 *   I agree to take part in this research project and agree for my data to be used for the purpose of this study.
 *   I understand my participation is voluntary and I may withdraw at any time for any reason without my participation rights being affected.
 *   I agree with the above statements and wish to continue.
-
